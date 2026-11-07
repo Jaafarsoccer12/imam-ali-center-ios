@@ -1,0 +1,7 @@
+.DS_Store
+.iac-preview/
+DerivedData/
+build/
+xcuserdata/
+*.xcuserstate
+*.xcresult/

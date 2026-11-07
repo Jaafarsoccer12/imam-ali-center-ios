@@ -1,0 +1,200 @@
+/* Shared by the official live pages and their bundled reading copies. */
+:root {
+  --reader-body: 17px;
+  --reader-gutter: clamp(16px, 5vw, 32px);
+  --page: min(720px, calc(100% - 2 * var(--reader-gutter)));
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --reader-paper: #f8f6f0;
+  --reader-ink: #173c34;
+}
+html {
+  color-scheme: light;
+  font-size: var(--reader-body);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 18px;
+}
+body {
+  --page: min(720px, calc(100% - 2 * var(--reader-gutter)));
+  padding-bottom: 32px !important;
+  background: var(--reader-paper);
+}
+body > .utility-bar, body > .app-banner, body > .site-header, body > .site-footer,
+body > .mobile-dock, body > .skip-link, .interior-hero .breadcrumbs, .interior-location {
+  display: none !important;
+}
+main { max-width: 100%; font-family: var(--sans); color: var(--reader-ink); overflow-wrap: anywhere; }
+main :where(article, section, form, fieldset, figure, div, ul, li, label) { min-width: 0; }
+main img, main video, main iframe { max-width: 100%; }
+main .page-section { width: var(--page); max-width: 720px; padding-block: 30px; }
+main .page-section.section-wash { width: 100%; max-width: none; padding-inline: max(var(--reader-gutter), calc((100% - 720px)/2)); }
+main .page-section + .document-section { border-top: 1px solid #d8ded3; }
+
+/* Keep the original photograph visible above the page title, at any text size. */
+main .interior-hero { display: block; min-height: 0; color: var(--reader-ink); background: var(--reader-paper); border-bottom: 1px solid #d8ded3; }
+main .interior-hero::before {
+  position: static; display: block; width: 100%; height: clamp(145px, 45vw, 255px);
+  background-image: var(--interior-image); background-position: center 46%; background-size: cover;
+}
+main .interior-hero::after { display: none; }
+main .interior-hero-inner { width: var(--page); max-width: 720px; padding: 23px 0 28px; }
+main .interior-hero .interior-eyebrow { color: #925032; }
+main .interior-eyebrow > span { background: currentColor; }
+main .interior-hero h1 {
+  color: var(--reader-ink); font-family: var(--serif); font-size: max(1.24rem, min(3.1rem, calc(1.56rem + 4vw)));
+  letter-spacing: -.035em; line-height: 1.12; margin: .4em 0 .32em; max-width: 22ch;
+}
+main .interior-hero p { color: #3c5149; max-width: 60ch; }
+main .interior-hero-inner > .button { margin-top: 18px; background: #17493e; color: #fff; }
+
+main .page-section :is(p, li, dt, dd, label, legend, blockquote),
+main .interior-hero p, main .reader-online { font-size: 1rem; line-height: 1.58; }
+main .page-section p, main .page-section blockquote { text-wrap: pretty; }
+main .page-section :is(h2,h3,h4) { line-height: 1.2; overflow-wrap: anywhere; }
+main .page-section h2 { font-size: 1.62rem; letter-spacing: -.025em; }
+main .page-section h3 { font-size: 1.3rem; }
+main .page-section h4 { font-size: 1.08rem; }
+main :is(.eyebrow, .event-type) { font-size: .72rem; line-height: 1.45; letter-spacing: .095em; }
+main .page-section :is(.small-note,.pricing-note,.form-feedback,.calendar-status,.captcha-status),
+main .page-section small, main .page-section figcaption { font-size: .88rem; line-height: 1.5; }
+main .page-section :is(.service-prose,.scripture-card,.nonprofit-about,.document-inquiry) { max-width: 100%; }
+main .page-section :is(.scripture-arabic, [dir="rtl"], [lang="ar"]) {
+  font-family: "Geeza Pro", "Noto Naskh Arabic", serif; font-size: 1.47rem;
+  line-height: 1.98; letter-spacing: normal; word-break: normal; overflow-wrap: break-word;
+}
+main .scripture-card blockquote { margin-block: .85em 0; color: #34483d; }
+main :is(.feature-card,.scripture-card,.service-list-card,.nonprofit-about,.document-inquiry,.contact-form,.hall-card,.page-cta) {
+  border-radius: 13px;
+}
+main .page-section :is(.scripture-card,.feature-card,.service-list-card,.page-cta,.nonprofit-about,.document-inquiry) { padding: clamp(17px, 5vw, 28px); }
+
+/* Preserve each form and endpoint while removing compact desktop control sizes. */
+main :is(.button,.calendar-button,button,.text-link), main figcaption a, main .reader-online a {
+  min-width: 48px; min-height: 48px; height: auto; max-width: 100%;
+  font-size: .94rem; line-height: 1.38; white-space: normal; overflow-wrap: anywhere;
+}
+main :is(.button,.calendar-button) { padding: 11px 16px; border-radius: 10px; text-align: center; }
+main :is(.text-link,figcaption a,.reader-online a) {
+  display: inline-flex; align-items: center; padding-block: 8px; font-weight: 600;
+}
+main :is(.button-row,.calendar-controls,.tabs,.category-filters) { flex-wrap: wrap; gap: 10px; }
+main .page-section p a:not(.button,.text-link) { text-decoration: underline; text-underline-offset: .17em; }
+main :is(a,button,input,textarea,select):focus-visible { outline: 3px solid #a05a36; outline-offset: 3px; }
+main .contact-form { gap: 16px; }
+main .contact-form label { row-gap: 7px; }
+main :is(input:not([type=radio]):not([type=checkbox]):not([type=hidden]), textarea, select) {
+  min-height: 48px; min-width: 0; max-width: 100%; height: auto;
+  font: inherit; font-size: max(16px, 1rem) !important; line-height: 1.4; padding: 10px 12px;
+}
+main .contact-form textarea { min-height: 7rem; }
+main :is(.request-consent,.radio-label) { min-height: 48px; align-items: center; }
+main :is(.radio-label,.request-consent) :is(input[type=checkbox],input[type=radio]) { flex-shrink: 0; width: 21px; height: 21px; }
+main .captcha-field > div { flex-wrap: wrap; gap: 10px; }
+main .captcha-field button { padding-inline: 12px; }
+main .page-section :is(.rental-steps li,.rental-total,.hall-review dt,.hall-review dd) { font-size: .94rem !important; }
+main .reader-online { margin-block: 16px; padding: 16px; border-radius: 12px; color: #143e32; background: #eaf0e9; }
+main .reader-online a { color: #194d40; text-decoration: underline; }
+
+/* Gallery photographs and documentary pictures retain their original proportions. */
+main .page-section :is(.school-image,.hall-card > img,.gallery-photo-link img) {
+  display: block; width: 100%; height: auto; min-height: 0; max-height: none;
+  aspect-ratio: auto; object-fit: contain; border-radius: 10px;
+}
+main .portrait-slot { max-width: 100%; }
+main .gallery-grid figcaption { display: flex; flex-wrap: wrap; gap: 3px 10px; align-items: center; }
+main .gallery-grid figcaption a { white-space: normal; }
+
+@media (max-width: 600px) {
+  main .page-section :is(.feature-grid,.service-list-grid,.scripture-grid,.form-row,.hall-grid,.staff-grid,.values-grid) { grid-template-columns: minmax(0, 1fr); }
+  main .page-section .button-row { align-items: stretch; }
+  main .page-section .button-row > a { flex: 1 1 12rem; justify-content: center; }
+  main .event-row { grid-template-columns: auto minmax(0, 1fr); gap: 4px 13px; padding-block: 18px; }
+  main .event-date { grid-column: 1; grid-row: 1 / span 2; width: auto; height: auto; padding: 9px; align-self: start; border-radius: 9px; }
+  main .event-date small { font-size: .65rem; }
+  main .event-date strong, main .event-time strong { font-size: .94rem; }
+  main .event-time { grid-column: 2; grid-row: auto; flex-wrap: wrap; }
+  main .event-row .calendar-button { grid-column: 2; grid-row: auto; width: fit-content; padding: 9px 12px; margin-top: 6px; font-size: .88rem; white-space: normal; }
+  main .event-row .calendar-button span { display: inline; }
+  main .event-row .calendar-button::after { content: none; }
+  main .calendar-toolbar { align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+  main .calendar-controls .calendar-arrow { width: 48px; height: 48px; }
+  main .gallery-grid { columns: 1; }
+  main .page-section .rental-options .request-consent span { flex-wrap: wrap; gap: 4px 10px; }
+}
+
+/* At accessibility sizes, day-by-day rows show the same dates and weekday labels. */
+html[data-large-type] main .hijri-calendar-grid { display: block; }
+html[data-large-type] main .calendar-weekday, html[data-large-type] main .calendar-day.is-empty { display: none; }
+html[data-large-type] main .calendar-day {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center;
+  min-height: 0; column-gap: 14px; padding: 13px 16px;
+}
+html[data-large-type] main .calendar-day strong { grid-row: 1 / 3; font-size: 1.12rem; }
+html[data-large-type] main .calendar-day > span, html[data-large-type] main .calendar-day > small { display: block; grid-column: 2; font-size: .9rem; line-height: 1.4; }
+html[data-large-type] main .event-row { grid-template-columns: minmax(0, 1fr); }
+html[data-large-type] main .event-row > * { grid-column: 1; grid-row: auto; justify-self: start; }
+html[data-large-type] main .hall-review dl > div { grid-template-columns: minmax(0,1fr); gap: 4px; }
+html[data-large-type] main :is(.calendar-legend,.giving-option,.hero-actions,.prayer-row,.hall-specs,.rental-total) { flex-wrap: wrap; }
+html[data-large-type] main .rental-steps { flex-direction: column; }
+/* Home anchors (newsletter, contact and education) can also open in the reader. */
+main :is(.section,.services-section,.prayer-section,.giving-section,.newsletter-section,.contact-form-section) p {
+  font-size: 1rem; line-height: 1.58;
+}
+main :is(.section,.services-section,.prayer-section,.giving-section,.newsletter-section) h2 {
+  font-size: 1.64rem; line-height: 1.15;
+}
+main :is(.service-card,.education-card,.schedule-info,.special-card) h3 { font-size: 1.26rem; line-height: 1.25; }
+main .page-section a[href^="tel:"], main .contact-details > a, main a.map-directions,
+main .event-row .calendar-button, main .schedule-card .calendar-button { min-height: 48px; }
+main .page-section a[href^="tel:"] { display: inline-flex; align-items: center; }
+main .contact-details :is(strong,small) { font-size: .9rem; }
+main :is(.service-card > a,.map-directions,.schedule-meta strong,.prayer-row,.giving-option span) { font-size: .94rem; }
+main .newsletter-form .captcha-inline, main .newsletter-form .captcha-inline > div { gap: 8px; flex-wrap: wrap; }
+main .newsletter-form .captcha-inline button, main .newsletter-form > button[type=submit],
+main .newsletter-form .captcha-inline input, main .newsletter-form > #newsletter-email { min-height: 48px; font-size: .94rem; }
+main .newsletter-form .captcha-inline input { width: 7rem; max-width: 100%; }
+main .newsletter-form .captcha-inline .captcha-status.is-error, main .newsletter-form .form-feedback {
+  position: static; flex-basis: 100%; width: auto;
+}
+@media(max-width: 600px) {
+  main .hero-inner { min-height: 0; padding-block: 38px 24px; }
+  main .hero-pagination { position: static; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+  main .hero-dots { flex-basis: 100%; flex-wrap: wrap; order: 1; gap: 5px; }
+  main .hero-dots:empty { display: none; }
+  main .hero-dots .hero-dot, main .hero-pagination .hero-arrow { width: 48px; height: 48px; }
+  main .hero-copy { padding-bottom: 0; }
+  main .schedule-card { grid-template-columns: auto minmax(0,1fr); gap: 4px 12px; }
+  main .schedule-day { grid-column: 1; grid-row: 1 / span 2; align-self: start; }
+  main .schedule-info, main .schedule-meta, main .schedule-card .calendar-button { grid-column: 2; grid-row: auto; }
+  main .schedule-meta { flex-wrap: wrap; }
+  main .schedule-card .calendar-button { position: static; width: fit-content; min-width: 48px; margin-top: 8px; overflow: visible; white-space: normal; }
+  main .schedule-card .calendar-button span { display: inline; }
+  main .newsletter-form { display: flex; align-items: stretch; flex-direction: column; }
+  main .newsletter-form > #newsletter-email { width: 100%; flex: 0 1 auto; }
+}
+html[data-large-type] main .schedule-card { grid-template-columns: minmax(0,1fr); }
+html[data-large-type] main .schedule-card > * { grid-column: 1; grid-row: auto; }
+
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { transition: none !important; animation-duration: .01ms !important; }
+}
+@media(max-width:600px) {
+  main .hijri-calendar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
+  main .calendar-weekday, main .calendar-day.is-empty { display: none; }
+  main .calendar-day { padding: 12px; gap: 3px; }
+  main .calendar-day > strong { font-size: 1.1rem; }
+  main .calendar-day > span, main .calendar-day > small { display: block; font-size: .88rem; line-height: 1.4; }
+}
+main .newsletter-copy h2 { white-space: normal; }
+main .newsletter-copy > p { display: block; margin: .4em 0 0; }
+main #services .service-card p, main #services .section-heading p, main #donate .giving-inner p { font-size: 1rem; line-height: 1.58; }
+main #services .service-card h3 { font-size: 1.26rem; overflow-wrap: anywhere; }
+main #services .service-card > a { font-size: .94rem; min-height: 48px; }
+main .contact-map:has(> .text-link + .map-directions) { min-height: 0; }
+main .contact-map > .text-link:has(+ .map-directions) { display: none; }
+main .contact-map > .text-link + .map-directions { position: static; }
+@media(max-width:600px) {
+  main #services .services-grid { grid-template-columns: minmax(0,1fr); grid-auto-flow: row; grid-auto-columns: auto; overflow: visible; }
+  main #services .service-card { min-height: 0; padding: 20px; }
+}
