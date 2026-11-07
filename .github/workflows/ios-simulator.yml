@@ -1,0 +1,41 @@
+name: iOS Simulator Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: macos-15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build and test on an available iOS Simulator
+        shell: bash
+        run: |
+          set -euo pipefail
+          device_id="$(xcrun simctl list devices available | sed -nE 's/.*iPhone.*\(([0-9A-F-]{36})\).*/\1/p' | head -n 1)"
+          if [[ -z "${device_id}" ]]; then
+            echo "No available iPhone simulator was found."
+            xcrun simctl list devices available
+            exit 1
+          fi
+
+          xcodebuild \
+            -project ImamAliCenter.xcodeproj \
+            -scheme ImamAliCenter \
+            -destination "platform=iOS Simulator,id=${device_id}" \
+            -derivedDataPath DerivedData \
+            -resultBundlePath TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            build test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-test-results
+          path: TestResults.xcresult
