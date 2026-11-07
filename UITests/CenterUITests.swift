@@ -127,7 +127,8 @@ final class CenterUITests: XCTestCase {
         assertTouchSize(app.buttons["Page options"])
         capture("Service detail")
         if !app.staticTexts["Saved copy"].exists {
-            app.buttons["Page options"].tap()
+            let pageOptions = app.buttons["Page options"]
+            pageOptions.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             app.buttons["Read saved copy"].tap()
         }
         XCTAssertTrue(app.staticTexts["Saved copy"].waitForExistence(timeout: 4))
@@ -135,7 +136,8 @@ final class CenterUITests: XCTestCase {
         if app.buttons["Close"].firstMatch.exists {
             app.buttons["Close"].firstMatch.tap()
         } else {
-            app.buttons["Page options"].tap()
+            let pageOptions = app.buttons["Page options"]
+            pageOptions.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             app.buttons["Close"].firstMatch.tap()
         }
         app.tabBars.buttons["Visit"].tap()
