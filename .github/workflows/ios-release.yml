@@ -5,7 +5,7 @@ on:
 
 jobs:
   archive-and-upload:
-    runs-on: macos-15
+    runs-on: macos-26
     env:
       APPLE_ID: ${{ secrets.APPLE_ID }}
       APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
