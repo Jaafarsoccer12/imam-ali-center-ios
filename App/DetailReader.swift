@@ -241,11 +241,13 @@ private final class CenterReaderState: NSObject, ObservableObject, WKNavigationD
     private let readerStyles: String
     private var bodyPointSize: CGFloat?
     private var started = false
+    private var privacyReady = false
     private var fileToShare: URL?
 
     init(url: URL) {
         canonicalURL = url
         let configuration = WKWebViewConfiguration()
+        configuration.websiteDataStore = .nonPersistent()
         configuration.allowsInlineMediaPlayback = true
         configuration.setURLSchemeHandler(CenterSavedScheme(), forURLScheme: CenterPageStore.scheme)
         let styleURL = CenterPageStore.resource(name: "reader.css")
@@ -308,10 +310,24 @@ private final class CenterReaderState: NSObject, ObservableObject, WKNavigationD
     func start() {
         guard !started else { return }
         started = true
-        reload()
+        let rules = #"[{"trigger":{"url-filter":"^https?://([^/]+[.])?(googletagmanager[.]com|google-analytics[.]com|analytics[.]google[.]com|cloudflareinsights[.]com|doubleclick[.]net|googleadservices[.]com|googlesyndication[.]com)/"},"action":{"type":"block"}}]"#
+        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: "IACReaderPrivacy-v1", encodedContentRuleList: rules) { [weak self] list, _ in
+            Task { @MainActor in
+                guard let self else { return }
+                guard let list else {
+                    if self.hasSavedCopy { self.readSavedCopy() }
+                    else { self.loading = false; self.cannotLoad = true }
+                    return
+                }
+                self.webView.configuration.userContentController.add(list)
+                self.privacyReady = true
+                self.reload()
+            }
+        }
     }
 
     func reload() {
+        guard privacyReady else { return }
         cannotLoad = false
         loading = true
         webView.load(URLRequest(url: canonicalURL, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 12))
