@@ -1,0 +1,49 @@
+name: App Store screenshots
+on:
+  push:
+    paths: ['.github/workflows/store-screenshots.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: macos-26
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: iphone-medium
+            type: com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro
+          - name: ipad-13
+            type: com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-16GB
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare device
+        env:
+          DEVICE_TYPE: ${{ matrix.type }}
+        run: |
+          set -euo pipefail
+          xcodebuild -version
+          xcrun simctl list --json > inventory.json
+          runtime=$(python3 -c 'import json; d=json.load(open("inventory.json")); print(sorted([r for r in d["runtimes"] if r["isAvailable"] and ".iOS-" in r["identifier"]],key=lambda r:tuple(map(int,r["version"].split("."))))[-1]["identifier"])')
+          if [[ "$DEVICE_TYPE" == *iPad* ]]; then
+            DEVICE_TYPE=$(python3 -c 'import json; d=json.load(open("inventory.json")); print(next(t["identifier"] for t in d["devicetypes"] if "iPad Pro 13-inch (M4)" in t["name"]))')
+          fi
+          device=$(xcrun simctl create 'IAC Store Capture' "$DEVICE_TYPE" "$runtime")
+          echo "DEVICE_ID=$device" >> "$GITHUB_ENV"
+          xcrun simctl bootstatus "$device" -b
+          xcrun simctl status_bar "$device" override --time '9:41' --dataNetwork wifi --wifiMode active --wifiBars 3 --batteryState charged --batteryLevel 100
+      - name: Capture real app screens
+        run: |
+          xcodebuild -project ImamAliCenter.xcodeproj -scheme ImamAliCenter -destination "platform=iOS Simulator,id=$DEVICE_ID" -derivedDataPath DerivedData -resultBundlePath Screenshots.xcresult -only-testing:ImamAliCenterUITests/CenterUITests/testStoreScreenshots CODE_SIGNING_ALLOWED=NO test
+      - name: Export screenshots
+        if: always()
+        run: |
+          mkdir -p screenshots
+          xcrun xcresulttool export attachments --path Screenshots.xcresult --output-path screenshots
+          cp inventory.json screenshots/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-screenshots-${{ matrix.name }}
+          path: screenshots

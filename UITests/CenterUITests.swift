@@ -1,6 +1,24 @@
 import XCTest
 
 final class CenterUITests: XCTestCase {
+    func testStoreScreenshots() {
+        XCUIDevice.shared.orientation = .portrait
+        XCTAssertTrue(app.buttons["Next feature"].waitForExistence(timeout: 15))
+        capture("01-Home")
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Next prayer,")).firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["Prayer times"].waitForExistence(timeout: 8))
+        capture("02-Prayer")
+        app.buttons["Done"].tap()
+        app.tabBars.buttons["Programs"].tap()
+        XCTAssertTrue(app.buttons["Weekly schedule"].waitForExistence(timeout: 8))
+        capture("03-Programs")
+        app.tabBars.buttons["Explore"].tap()
+        XCTAssertTrue(app.textFields["Search the directory"].waitForExistence(timeout: 8))
+        capture("04-Explore")
+        app.tabBars.buttons["Visit"].tap()
+        XCTAssertTrue(app.staticTexts["Visit the Center."].waitForExistence(timeout: 8))
+        capture("05-Visit")
+    }
     let app = XCUIApplication()
     override func setUp() {
         super.setUp()
