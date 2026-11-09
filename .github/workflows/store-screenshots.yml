@@ -24,6 +24,7 @@ jobs:
           DEVICE_TYPE: ${{ matrix.type }}
         run: |
           set -euo pipefail
+          sudo systemsetup -settimezone America/New_York
           xcodebuild -version
           xcrun simctl list --json > inventory.json
           runtime=$(python3 -c 'import json; d=json.load(open("inventory.json")); print(sorted([r for r in d["runtimes"] if r["isAvailable"] and ".iOS-" in r["identifier"]],key=lambda r:tuple(map(int,r["version"].split("."))))[-1]["identifier"])')
