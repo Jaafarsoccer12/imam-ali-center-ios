@@ -1,6 +1,11 @@
 import XCTest
 
 final class CenterUITests: XCTestCase {
+    private func selectTab(_ name: String) {
+        let tab = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", name)).firstMatch
+        XCTAssertTrue(tab.waitForExistence(timeout: 8))
+        tab.tap()
+    }
     func testStoreScreenshots() {
         XCUIDevice.shared.orientation = .portrait
         XCTAssertTrue(app.buttons["Next feature"].waitForExistence(timeout: 15))
@@ -9,13 +14,13 @@ final class CenterUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Prayer times"].waitForExistence(timeout: 8))
         capture("02-Prayer")
         app.buttons["Done"].tap()
-        app.tabBars.buttons["Programs"].tap()
+        selectTab("Programs")
         XCTAssertTrue(app.buttons["Weekly schedule"].waitForExistence(timeout: 8))
         capture("03-Programs")
-        app.tabBars.buttons["Explore"].tap()
+        selectTab("Explore")
         XCTAssertTrue(app.textFields["Search the directory"].waitForExistence(timeout: 8))
         capture("04-Explore")
-        app.tabBars.buttons["Visit"].tap()
+        selectTab("Visit")
         XCTAssertTrue(app.staticTexts["Visit the Center."].waitForExistence(timeout: 8))
         capture("05-Visit")
     }
@@ -41,7 +46,7 @@ final class CenterUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Prayer times"].waitForExistence(timeout: 4))
         capture("Prayer")
         app.buttons["Done"].tap()
-        app.tabBars.buttons["Programs"].tap()
+        selectTab("Programs")
         let calendarAction = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@ AND label ENDSWITH %@", "Add ", " to calendar")).firstMatch
         XCTAssertTrue(calendarAction.waitForExistence(timeout: 4))
         assertTouchSize(calendarAction)
@@ -112,13 +117,13 @@ final class CenterUITests: XCTestCase {
         assertTouchSize(app.buttons["Done"])
         capture("Prayer at largest text")
         app.buttons["Done"].tap()
-        app.tabBars.buttons["Explore"].tap()
+        selectTab("Explore")
         assertTouchSize(app.textFields["Search the directory"])
         capture("Explore at largest text")
     }
 
     func testReviewRecurringGatheringWithoutSaving() {
-        app.tabBars.buttons["Programs"].tap()
+        selectTab("Programs")
         let event = app.buttons.matching(NSPredicate(format:"label BEGINSWITH %@ AND label ENDSWITH %@", "Add ", " to calendar")).firstMatch
         XCTAssertTrue(event.waitForExistence(timeout: 5))
         event.tap()
@@ -128,7 +133,7 @@ final class CenterUITests: XCTestCase {
         cancel.tap()
     }
     func testExploreReaderAndVisit() {
-        app.tabBars.buttons["Explore"].tap()
+        selectTab("Explore")
         let search = app.textFields["Search the directory"]
         XCTAssertTrue(search.waitForExistence(timeout: 4))
         assertTouchSize(search)
@@ -158,7 +163,7 @@ final class CenterUITests: XCTestCase {
             pageOptions.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
             app.buttons["Close"].firstMatch.tap()
         }
-        app.tabBars.buttons["Visit"].tap()
+        selectTab("Visit")
         XCTAssertTrue(app.staticTexts["Visit the Center."].waitForExistence(timeout: 4))
         capture("Visit")
     }
