@@ -73,7 +73,8 @@ private struct DirectoryGroup: Identifiable {
         DirectoryGroup(title: "About us", symbol: "building.columns", subtitle: "The Center, our scholars and staff", pages: [
             .init("About Imam Ali Center", "/about/", "about us mission history IAC community"),
             .init("Staff & volunteers", "/staff/", "get involved team people"),
-            .init("Our scholars", "/our-scholars/", "sheikh imam teachers leadership")
+            .init("Our scholars", "/our-scholars/", "sheikh imam teachers leadership"),
+            .init("Privacy policy", "https://jaafarsoccer12.github.io/imam-ali-center-ios/privacy.html", "privacy data retention deletion")
         ])
     ]
 }

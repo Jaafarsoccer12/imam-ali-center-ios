@@ -202,6 +202,7 @@ struct HomeScreen: View {
             actionRow("About the Center", path: "/about/")
             actionRow("Ways to give", path: "/donate/")
             actionRow("Plan your visit", path: "/contact/")
+            actionRow("Privacy policy", path: "https://jaafarsoccer12.github.io/imam-ali-center-ios/privacy.html")
         }
     }
 
