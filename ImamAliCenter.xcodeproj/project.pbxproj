@@ -308,7 +308,7 @@
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SUPPORTS_MACCATALYST" = "NO";
 				"MARKETING_VERSION" = "1.0.4";
-				"CURRENT_PROJECT_VERSION" = "7";
+				"CURRENT_PROJECT_VERSION" = "8";
 				"SWIFT_EMIT_LOC_STRINGS" = "YES";
 				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
 				"INFOPLIST_KEY_ITSAppUsesNonExemptEncryption" = "NO";
@@ -333,7 +333,7 @@
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SUPPORTS_MACCATALYST" = "NO";
 				"MARKETING_VERSION" = "1.0.4";
-				"CURRENT_PROJECT_VERSION" = "7";
+				"CURRENT_PROJECT_VERSION" = "8";
 				"SWIFT_EMIT_LOC_STRINGS" = "YES";
 				"ASSETCATALOG_COMPILER_APPICON_NAME" = "AppIcon";
 				"INFOPLIST_KEY_ITSAppUsesNonExemptEncryption" = "NO";
@@ -364,7 +364,7 @@
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SUPPORTS_MACCATALYST" = "NO";
 				"MARKETING_VERSION" = "1.0.4";
-				"CURRENT_PROJECT_VERSION" = "7";
+				"CURRENT_PROJECT_VERSION" = "8";
 				"SWIFT_EMIT_LOC_STRINGS" = "YES";
 				"TEST_TARGET_NAME" = "ImamAliCenter";
 			};
@@ -381,7 +381,7 @@
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SUPPORTS_MACCATALYST" = "NO";
 				"MARKETING_VERSION" = "1.0.4";
-				"CURRENT_PROJECT_VERSION" = "7";
+				"CURRENT_PROJECT_VERSION" = "8";
 				"SWIFT_EMIT_LOC_STRINGS" = "YES";
 				"TEST_TARGET_NAME" = "ImamAliCenter";
 			};
